@@ -1,0 +1,149 @@
+/* ============================================
+   Navbar.css
+   ============================================ */
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  padding: 0 1.5rem;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border-subtle);
+  animation: fadeInDown 0.6s ease both;
+}
+
+.navbar__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+/* ── Brand ── */
+.navbar__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+/* Mini cuadrícula de 3x3 como logo */
+.navbar__logo {
+  width: 34px;
+  height: 34px;
+}
+
+.navbar__logo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3px;
+  width: 100%;
+  height: 100%;
+}
+
+.navbar__logo-grid span {
+  background: var(--color-cyan);
+  border-radius: 2px;
+  opacity: 0.85;
+  transition: opacity var(--transition-fast);
+}
+
+.navbar__logo-grid span:nth-child(2),
+.navbar__logo-grid span:nth-child(4),
+.navbar__logo-grid span:nth-child(6),
+.navbar__logo-grid span:nth-child(8) {
+  opacity: 0.35;
+}
+
+.navbar__brand:hover .navbar__logo-grid span { opacity: 1; }
+
+.navbar__name {
+  font-size: 1.5rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  background: linear-gradient(135deg, var(--color-blue), var(--color-cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Nav links ── */
+.navbar__nav { margin-left: auto; }
+
+.navbar__list {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  list-style: none;
+}
+
+.navbar__link {
+  display: block;
+  padding: 0.45rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  transition:
+    color var(--transition-fast),
+    background var(--transition-fast);
+}
+
+.navbar__link:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.navbar__link--active {
+  color: var(--color-cyan);
+  background: rgba(34, 211, 238, 0.08);
+}
+
+.navbar__link--active:hover {
+  color: var(--color-cyan);
+  background: rgba(34, 211, 238, 0.14);
+}
+
+/* ── Burger (oculto en desktop) ── */
+.navbar__burger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 36px;
+  height: 36px;
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: border-color var(--transition-fast);
+}
+
+.navbar__burger:hover { border-color: var(--color-cyan); }
+
+.navbar__burger-line {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background: var(--text-secondary);
+  border-radius: 2px;
+  transition: background var(--transition-fast);
+}
+
+.navbar__burger:hover .navbar__burger-line { background: var(--color-cyan); }
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .navbar__nav { display: none; }
+  .navbar__burger { display: flex; }
+}
