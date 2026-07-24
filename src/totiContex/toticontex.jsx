@@ -1,21 +1,23 @@
-import {inicio }from "../ty"
 
-const initilStale={
-    opcionInicio:""
-}
+import { Inicio } from "./inicio";
 
-const reducer=(state,action)=>{
+const initialState = {
+  opcionInicio: "",
+};
 
-    switch(action.type){
-        case inicio.seleccionar
-        return(
-            ...state,
-            opcionInicio:acion.payload.opcionInicio
-        )
-        break;
-        default;
-        break;
-    }
-}
-export {reducer}
-export{initilStale}
+const reducer = (state, action) => {
+  switch (action.type) {
+
+    case Inicio.seleccionar:
+      return {
+        ...state,
+        opcionInicio: action.payload,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export { reducer };
+export { initialState };

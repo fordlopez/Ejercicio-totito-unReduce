@@ -1,121 +1,99 @@
-/* 
-import {opcionesvalidas} from './'
-import { useReducer } from 'react'
-import{reducer} from ''
+import React, { useReducer } from "react";
+import "./App.css";
+import HumanoVsHumano from "./HumanoVsHumano/HumanoVsHumano";
+import { reducer } from "./totiContex/toticontex";
+import { Inicio, OpcionesValidas } from "./totiContex/inicio";
+
 function App() {
 
-const [state,disatch]=useReducer(reducer,{
-  opcionesvalidas:OpcionesValidas.AIA
-})
-const onclick=(event)=>{
-  disatch({type:Inicio.seleccionar, payload:(event.targe.id)})
-}
+  const [state, dispatch] = useReducer(reducer, {
+    opcionInicio: OpcionesValidas.AIA,
+  });
+
+  const onClick = (event) => {
+    dispatch({
+      type: Inicio.seleccionar,
+      payload: event.target.id,
+    });
+  };
+
   return (
-    <>
-    <div id='1' className="app">
+    <div className="home-container">
+      {/* Decoración de fondo geométrica */}
+      <div className="bg-decor" aria-hidden="true">
+        <span className="shape shape-circle shape-1"></span>
+        <span className="shape shape-square shape-2"></span>
+        <span className="shape shape-circle shape-3"></span>
+        <span className="shape shape-triangle shape-4"></span>
+        <span className="shape shape-square shape-5"></span>
+      </div>
 
+      <main className="home-content">
+        <span className="home-eyebrow">Bienvenido</span>
 
-      <main className="app__main ${state.opcionInicio==OpcionValidads.HH && 'el nobre de mi clace'.}"onclick={onclick} >
-      
-      </main>
- <footer className="footer" role="contentinfo">
-      <div className="footer__container">
+        <h1 className="home-title">TOTITO</h1>
 
-
-
-        <div className="footer__logo" aria-hidden="true">
-          <div className="footer__logo-grid">
-          
-           
-          </div>
-        </div>
-
-        <div className="footer__line" aria-hidden="true" />
-
-        <p className="footer__texto">
-          Desarrollado con{' '}
-          <span className="footer__react" aria-label="React">
-
-            <svg
-              className="footer__react-logo"
-              viewBox="0 0 24 24"
-              fill="none"
-              aria-hidden="true"
-            >
-              <ellipse cx="12" cy="12" rx="10" ry="4"
-                stroke="currentColor" strokeWidth="1.5" />
-              <ellipse cx="12" cy="12" rx="10" ry="4"
-                stroke="currentColor" strokeWidth="1.5"
-                transform="rotate(60 12 12)" />
-              <ellipse cx="12" cy="12" rx="10" ry="4"
-                stroke="currentColor" strokeWidth="1.5"
-                transform="rotate(120 12 12)" />
-              <circle cx="12" cy="12" r="2"
-                fill="currentColor" />
-            </svg>
-            React
-          </span>{' '}
-      
+        <p className="home-subtitle">
+          Selecciona un modo de juego
         </p>
 
-      </div>
-    </footer>
-      <Footer className="app__main ${state.opcionInicio==OpcionValidads.HAT && 'el nobre de mi clace'.}"onclick={onclick} />
-    </div>
-    </>
-  )
-}
+        <nav className="mode-buttons">
 
-export default App
- */
+          <button
+            id="1"
+            className={`mode-btn ${state.opcionInicio === OpcionesValidas.HH
+              ? "nombre-de-mi-clase"
+              : ""
+              }`}
+            onClick={onClick}
+            type="button"
+          >
+            <span className="mode-icon">👥</span>
+            <span className="mode-text">
+              Humano vs Humano
+            </span>
+          </button>
 
-// src/App.jsx
-import './App.css';
-/* import Home     from './components/Home/Home';
-import Tablero  from './components/Tablero/Tablero';
-import Resultado from './components/Resultado/Resultado';
-import Footer   from './components/Footer/Footer'; */
-import Navbar from './Navbar/Navbar';
+          <button
+            id="2"
+            className={`mode-btn ${state.opcionInicio === OpcionesValidas.HIA
+              ? "nombre-de-mi-clase"
+              : ""
+              }`}
+            onClick={onClick}
+            type="button"
+          >
+            <span className="mode-icon">🤖</span>
+            <span className="mode-text">
+              Humano vs IA
+            </span>
+          </button>
 
-/**
- * App — Componente raíz.
- *
- * Actualmente renderiza todas las vistas en secuencia para
- * fines de diseño y presentación visual.
- *
- * Al integrar la lógica, se deberá reemplazar la presentación
- * secuencial por un enrutador (React Router) o un sistema de
- * vistas controlado por estado (currentView).
- *
- * Vista posible: 'home' | 'game' | 'result'
- */
-const App = () => {
-  return (
-    <div className="app">
-      <Navbar />
+          <button
+            id="3"
+            className={`mode-btn ${state.opcionInicio === OpcionesValidas.AIA
+              ? "nombre-de-mi-clase"
+              : ""
+              }`}
+            onClick={onClick}
+            type="button"
+          >
+            <span className="mode-icon">⚙️</span>
+            <span className="mode-text">
+              IA vs IA
+            </span>
+          </button>
 
-      {/* ── VISTA: Home ── */}
-      <main className="app__main">
-        <Home />
+        </nav>
       </main>
 
-      {/* ── VISTA: Juego (para presentación visual, comentar/descomentar) ── */}
-      {/*
-      <main className="app__main">
-        <Tablero />
-      </main>
-      */}
+      <footer className="home-footer">
+        <p>Tres en raya, reinventado</p>
+      </footer>
 
-      {/* ── VISTA: Resultado (para presentación visual) ── */}
-      {/*
-      <main className="app__main app__main--centered">
-        <Resultado ganador="X" />
-      </main>
-      */}
-
-      <Footer />
+      {/* <HumanoVsHumano /> */}
     </div>
   );
-};
+}
 
 export default App;
