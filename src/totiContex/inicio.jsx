@@ -1,13 +1,14 @@
-const Inicio = Object.freeze({
-    seleccionar: 'SELECCIONAR',
-})
+const Inicio = {
+  seleccionar: "SELECCIONAR",
+  continuear: "CONTINUAR",
+  marcarCasilla: "MARCAR",
+  reiniciar: "REINICIAR",
+};
 
-const OpcionesValidas = Object.freeze({
-    HH: 'HH',
-    HIA: 'HIA',
-    AIA: 'AIA',
-})
+const OpcionesValidas = {
+  HH: "1",
+  HIA: "2",
+  AIA: "3",
+};
 
-export { Inicio }
-
-export { OpcionesValidas }
+export { Inicio, OpcionesValidas };
