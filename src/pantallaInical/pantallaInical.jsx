@@ -1,83 +1,39 @@
 import "./pantallaInical.css";
 import { Inicio, OpcionesValidas } from "../totiContex/inicio";
 
-function PantallaInical({ state, dispatch }) {
-  const onClick = (event) => {
-    dispatch({
-      type: Inicio.seleccionar,
-      payload: event.target.id,
-    });
-  };
+const modos = [
+  { id: OpcionesValidas.HH, icono: "👥", titulo: "Humano vs Humano", detalle: "Dos personas juegan en el mismo tablero." },
+  { id: OpcionesValidas.HIA, icono: "🤖", titulo: "Humano vs IA", detalle: "Preparado para conectar un rival con IA." },
+  { id: OpcionesValidas.AIA, icono: "⚙️", titulo: "IA vs IA", detalle: "Preparado para observar dos agentes de IA." },
+];
 
-  const onStart = () => {
-    if (state.opcionInicio) {
-      dispatch({ type: Inicio.continuear });
-    }
-  };
+function PantallaInical({ state, dispatch }) {
+  const iniciar = () => dispatch({ type: Inicio.continuear });
 
   return (
     <div className="home-container">
-      {/* Decoración de fondo geométrica */}
       <div className="bg-decor" aria-hidden="true">
-        <span className="shape shape-circle shape-1"></span>
-        <span className="shape shape-square shape-2"></span>
-        <span className="shape shape-circle shape-3"></span>
-        <span className="shape shape-triangle shape-4"></span>
-        <span className="shape shape-square shape-5"></span>
+        <span className="shape shape-circle shape-1" /><span className="shape shape-square shape-2" />
+        <span className="shape shape-circle shape-3" /><span className="shape shape-triangle shape-4" />
       </div>
-
       <main className="home-content">
         <span className="home-eyebrow">Bienvenido</span>
-
         <h1 className="home-title">TOTITO</h1>
-
         <p className="home-subtitle">Selecciona un modo de juego</p>
-
-        <nav className="mode-buttons">
-          <button
-            id="1"
-            className={`mode-btn ${state.opcionInicio === OpcionesValidas.HH ? "active" : ""}`}
-            onClick={onClick}
-            type="button"
-          >
-            <span className="mode-icon">👥</span>
-            <span className="mode-text">Humano vs Humano</span>
-          </button>
-
-          <button
-            id="2"
-            className={`mode-btn ${state.opcionInicio === OpcionesValidas.HIA ? "active" : ""}`}
-            onClick={onClick}
-            type="button"
-          >
-            <span className="mode-icon">🤖</span>
-            <span className="mode-text">Humano vs IA</span>
-          </button>
-
-          <button
-            id="3"
-            className={`mode-btn ${state.opcionInicio === OpcionesValidas.AIA ? "active" : ""}`}
-            onClick={onClick}
-            type="button"
-          >
-            <span className="mode-icon">⚙️</span>
-            <span className="mode-text">IA vs IA</span>
-          </button>
-        </nav>
-
-        <button
-          className="btn-start"
-          type="button"
-          disabled={!state.opcionInicio}
-          onClick={onStart}
-        >
+        <div className="mode-buttons" aria-label="Modos de juego">
+          {modos.map((modo) => (
+            <button key={modo.id} className={`mode-btn ${state.opcionInicio === modo.id ? "active" : ""}`}
+              onClick={() => dispatch({ type: Inicio.seleccionar, payload: modo.id })} type="button">
+              <span className="mode-icon">{modo.icono}</span>
+              <span className="mode-copy"><span className="mode-text">{modo.titulo}</span><small>{modo.detalle}</small></span>
+            </button>
+          ))}
+        </div>
+        <button className="btn-start" type="button" disabled={!state.opcionInicio} onClick={iniciar}>
           {state.opcionInicio ? "Comenzar a jugar" : "Selecciona un modo primero"}
         </button>
       </main>
-
-      <footer className="home-footer">
-        <p>Tres en raya, reinventado</p>
-      </footer>
+      <footer className="home-footer">Tres en raya, reinventado</footer>
     </div>
   );
 }

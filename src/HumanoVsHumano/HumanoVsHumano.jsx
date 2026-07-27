@@ -1,100 +1,52 @@
-import { use, useContext, useState } from "react";
 import "./HumanoVsHumano.css";
-import { Contex } from "../contex/contex";
+import { Inicio, OpcionesValidas } from "../totiContex/inicio";
 
-function HumanoVsHumano({ regresar }) {
-  const [tablero, setTablero] = useState(Array(9).fill(null));
-  const [turno, setTurno] = useState("X");
-  const [state,MarcarCasilla,RevisarGanadro] =useContext(Contex)
-  const [bloqueo, setBloqueo] = useState(false);
-const [ganador, setGanador] = useState("empate");
-  const marcarCasilla = (index) => {
-    if (tablero[index] || bloqueo) {
-      return;
-    }
+const titulos = {
+  [OpcionesValidas.HH]: "Humano vs Humano",
+  [OpcionesValidas.HIA]: "Humano vs IA",
+  [OpcionesValidas.AIA]: "IA vs IA",
+};
 
-    const nuevoTablero = [...tablero];
-    nuevoTablero[index] = turno;
-    setTablero(nuevoTablero);
-    setTurno(turno === "X" ? "O" : "X");
+function HumanoVsHumano({ state, dispatch }) {
+  const iaPendiente = state.opcionInicio !== OpcionesValidas.HH;
+  const juegoTerminado = state.ganador || state.empate;
+
+  const marcar = (index) => {
+    if (!iaPendiente) dispatch({ type: Inicio.marcarCasilla, payload: index });
   };
-
-  useEffect(() => {
-    const {isGanador, ganador} = revisarGanador()
-    if ((isGanadorx || isGanadorO) && blaquo != turno || state.tablero.every(item=> item !== undefined)) {
-
-
-
-   revisarGanador(state.tablero);
-   setBloqueo(true);
-    
-   
-    }else if ()
-  }, [state.tablero]);
-
- 
-    for (const combinacion of combinacionesGanadoras) {
-      const [a, b, c] = combinacion
 
   return (
     <div className="hvh-container">
       <header className="hvh-topbar">
-        <button className="btn-back" type="button" onClick={regresar}>
-          <span className="btn-back-arrow">←</span>
-          <span>Regresar</span>
-        </button>
-        <h1 className="hvh-title">Humano vs Humano</h1>
-        <span className="topbar-spacer" aria-hidden="true"></span>
+        <button className="btn-back" type="button" onClick={() => dispatch({ type: Inicio.volverInicio })}>← <span>Regresar</span></button>
+        <h1 className="hvh-title">{titulos[state.opcionInicio]}</h1>
+        <span className="topbar-spacer" aria-hidden="true" />
       </header>
-
       <main className="hvh-main">
+        {iaPendiente ? (
+          <section className="ai-notice" aria-live="polite"><strong>Modo preparado para IA</strong><span>La conexión con ChatGPT se añadirá aquí. Aún no se envían solicitudes ni se usa una clave.</span></section>
+        ) : (
+          <section className={`info-card turn-card ${juegoTerminado ? "finished" : ""}`} aria-live="polite">
+            <span className="info-label">{juegoTerminado ? "Resultado" : "Estado de la partida"}</span>
+            <span className="info-value">{state.mensaje}</span>
+          </section>
+        )}
         <section className="info-panel">
-         
-         
-          <div className="info-card turn-card">
-
-            { bloqueo ? (<span className="info-label">Juego terminado</span>) : (
-              <span className="info-label">Turno actual {turno}</span>
-            )}
-
-            <span className="info-value">Jugador {ganador}</span>
-
-          </div>
-
-          <div className="info-card player-card">
-            <span className="player-badge player-x">X</span>
-            <span className="player-name">Jugador X</span>
-          </div>
-
-          <div className="info-card player-card">
-            <span className="player-badge player-o">O</span>
-            <span className="player-name">Jugador O</span>
-          </div>
+          <div className={`info-card player-card ${state.turno === "X" && !juegoTerminado ? "current" : ""}`}><span className="player-badge player-x">X</span><span>Jugador X</span></div>
+          <div className={`info-card player-card ${state.turno === "O" && !juegoTerminado ? "current" : ""}`}><span className="player-badge player-o">O</span><span>Jugador O</span></div>
         </section>
-
-
-        <section className="board" aria-label="Tablero de Totito">
-          {tablero.map((valor, index) => (
-            <div
-              key={index}
-              className="casilla xox "
-              onClick={() => marcarCasilla(index)}
-              role="button"
-              tabIndex={0}
-            >
+        <section className={`board ${iaPendiente ? "board-disabled" : ""}`} aria-label="Tablero de Totito">
+          {state.tablero.map((valor, index) => (
+            <button key={index} className={`casilla ${valor ? `casilla-${valor.toLowerCase()}` : ""}`} type="button"
+              onClick={() => marcar(index)} disabled={Boolean(valor) || juegoTerminado || iaPendiente} aria-label={`Casilla ${index + 1}${valor ? `: ${valor}` : " vacía"}`}>
               {valor}
-            </div>
+            </button>
           ))}
         </section>
-
-        <div className="actions">
-          <button className="btn-primary" type="button" onClick={reiniciar}>
-            Reiniciar partida
-          </button>
-        </div>
+        <div className="actions"><button className="btn-primary" type="button" onClick={() => dispatch({ type: Inicio.reiniciar })}>Reiniciar partida</button></div>
       </main>
     </div>
   );
 }
-}
+
 export default HumanoVsHumano;

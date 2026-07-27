@@ -1,16 +1,24 @@
-# React + Vite
+# Totito con `useReducer`
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+El estado de la aplicación vive en `src/totiContex/toticontex.jsx`. El reducer gestiona:
 
-Currently, two official plugins are available:
+- modo seleccionado y navegación;
+- tablero y turno actual;
+- victoria, empate y el mensaje mostrado al jugador;
+- reinicio de la partida.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Modos con IA (preparados, sin conexión)
 
-## React Compiler
+Los modos **Humano vs IA** e **IA vs IA** ya se pueden seleccionar y muestran una pantalla que indica que falta conectar la IA. No hacen solicitudes ni incluyen una clave secreta.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Cuando quieras implementarlos, crea un backend (por ejemplo, con Node/Express) y guarda `OPENAI_API_KEY` solamente en sus variables de entorno. El frontend debe llamar a una ruta propia, como `POST /api/movimiento-ia`, enviando el tablero y el símbolo de la IA. El backend llama a OpenAI y devuelve solo una posición libre del 0 al 8. Después, el frontend despacha `MARCAR_CASILLA` con esa posición.
 
-## Expanding the ESLint configuration
+Nunca pongas la API key en React, en `src/`, ni en un archivo que se publique en GitHub.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Comandos
+
+```bash
+npm run dev
+npm run lint
+npm run build
+```

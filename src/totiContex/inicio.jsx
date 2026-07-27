@@ -1,14 +1,15 @@
 const Inicio = {
-  seleccionar: "SELECCIONAR",
-  continuear: "CONTINUAR",
-  marcarCasilla: "MARCAR",
-  reiniciar: "REINICIAR",
+  seleccionar: "SELECCIONAR_MODO",
+  continuear: "INICIAR_PARTIDA",
+  marcarCasilla: "MARCAR_CASILLA",
+  reiniciar: "REINICIAR_PARTIDA",
+  volverInicio: "VOLVER_AL_INICIO",
 };
 
 const OpcionesValidas = {
-  HH: "1",
-  HIA: "2",
-  AIA: "3",
+  HH: "HH",
+  HIA: "HIA",
+  AIA: "AIA",
 };
 
 export { Inicio, OpcionesValidas };
